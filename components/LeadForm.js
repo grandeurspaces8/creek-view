@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useLang } from './LanguageContext'
 
 const PHONE = '01008900076'
-const WA_LINK = `https://wa.me/2${PHONE}/?text=مرحباً، أريد الاستفسار عن مشروع كريك فيو ماونتن فيو`
+const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/leads@grandeur-spaces.com'
 
-export default function LeadForm({ dark = false, title, subtitle, id }) {
-  const [form, setForm] = useState({ name: '', phone: '' })
+export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
+  const { t } = useLang()
+  const f = t.form
+  const [form, setForm] = useState({ name: '', phone: '', email: '' })
   const [status, setStatus] = useState(null)
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
@@ -20,7 +23,8 @@ export default function LeadForm({ dark = false, title, subtitle, id }) {
         body: JSON.stringify({
           name: form.name,
           phone: form.phone,
-          _subject: `ليد جديد - كريك فيو ماونتن فيو | ${form.name} - ${form.phone}`,
+          email: form.email || 'Not provided',
+          _subject: `New Lead — Creek View MV | ${form.name} — ${form.phone}`,
           _template: 'table',
           _captcha: 'false',
         }),
@@ -28,7 +32,7 @@ export default function LeadForm({ dark = false, title, subtitle, id }) {
       const data = await res.json()
       if (data.success === 'true' || data.success === true) {
         setStatus('success')
-        setForm({ name: '', phone: '' })
+        setForm({ name: '', phone: '', email: '' })
       } else {
         setStatus('error')
       }
@@ -37,49 +41,52 @@ export default function LeadForm({ dark = false, title, subtitle, id }) {
     }
   }
 
+  const title = titleKey || (dark ? t.form2?.title : t.form.title)
+  const subtitle = subtitleKey || (dark ? t.form2?.sub : t.form.sub)
+
   const fields = (
     <>
       {status === 'success' ? (
-        <div className="form-success">
-          ✅ تم استلام بياناتك!<br />
-          <span style={{ fontSize: 13, fontWeight: 400 }}>سيتواصل معك فريق المبيعات قريباً</span>
-        </div>
+        <div className="form-success">{f.success}</div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input type="text" name="name" placeholder="الاسم *" value={form.name} onChange={handleChange} required />
+          <div className="form-field">
+            <input type="text" name="name" placeholder={f.name} value={form.name} onChange={handleChange} required />
           </div>
-          <div className="form-group">
-            <input type="tel" name="phone" placeholder="رقم الهاتف *" value={form.phone} onChange={handleChange} required />
+          <div className="form-field">
+            <input type="tel" name="phone" placeholder={f.phone} value={form.phone} onChange={handleChange} required />
+          </div>
+          <div className="form-field">
+            <input type="email" name="email" placeholder={f.email} value={form.email} onChange={handleChange} />
           </div>
           <button type="submit" className="btn-submit" disabled={status === 'loading'}>
-            {status === 'loading' ? 'جاري الإرسال...' : 'إرسال'}
+            {status === 'loading' ? f.submitting : f.submit}
           </button>
-          {status === 'error' && <p className="form-error">⚠️ حدث خطأ، حاول مرة أخرى</p>}
+          {status === 'error' && <p className="form-error">{f.error}</p>}
         </form>
       )}
-      <div className="form-cta-btns">
-        <a href={`tel:${PHONE}`} className="btn-form-call">📞 هاتف</a>
-        <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-form-wa">💬 واتساب</a>
+      <div className="form-contact-row">
+        <a href={`tel:${PHONE}`} className="btn-call-w">{f.call}</a>
+        <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-wa-w">{f.whatsapp}</a>
       </div>
     </>
   )
 
   if (!dark) {
     return (
-      <div className="hero-form-box" id={id}>
-        <h3>{title || 'سجل بياناتك'}</h3>
-        <p>{subtitle || 'وسيتواصل معك فريق المبيعات'}</p>
+      <div className="hero-form" id={id || 'register'}>
+        <h3>{title}</h3>
+        <p>{subtitle}</p>
         {fields}
       </div>
     )
   }
 
   return (
-    <section className="dark-form-section" id={id || 'form2'}>
+    <section className="dark-form-section" id={id || 'register2'}>
       <div className="dark-form-box">
-        <p className="dark-form-title">{title || 'سجل بياناتك'}</p>
-        <p className="dark-form-sub">{subtitle || 'وسيتواصل معك مستشارنا العقاري في أقرب وقت'}</p>
+        <p className="dark-form-title">{title}</p>
+        <p className="dark-form-sub">{subtitle}</p>
         {fields}
       </div>
     </section>
