@@ -25,10 +25,10 @@ body {
 /* ─── NAVBAR ─── */
 .navbar {
   position: fixed; top: 0; width: 100%;
-  background: rgba(13,17,23,0.96);
+  background: #000F3D;
   backdrop-filter: blur(12px);
   z-index: 1000; padding: 12px 0;
-  border-bottom: 1px solid rgba(26,155,140,0.2);
+  border-bottom: 1px solid rgba(0,61,166,0.4);
 }
 .navbar-inner {
   max-width: 1100px; margin: 0 auto;
