@@ -4,36 +4,6 @@ import { useLang } from '../components/LanguageContext'
 
 const PHONE = '01008900076'
 const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
-const IMG = 'https://creekview-mountainview.com/wp-content/uploads/2026/05'
-
-// Use smaller/optimized versions where possible
-const IMGS = {
-  logo:     `${IMG}/MV_Logo_Horizontal.png`,
-  hero:     `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88-.jpg`,
-  location: `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--5.jpg`,
-  gallery: [
-    `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--3.jpg`,
-    `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--4.jpg`,
-    `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--1.jpg`,
-    `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--2.jpg`,
-    `${IMG}/%D9%83%D8%B1%D9%8A%D9%83-%D9%81%D9%8A%D9%88-%D9%85%D8%A7%D9%88%D9%86%D8%AA%D9%86-%D9%81%D9%8A%D9%88--1.jpg`,
-    `${IMG}/creek-view.png`,
-  ],
-}
-
-// Lazy image component - loads only when visible
-function LazyImg({ src, alt, style, className }) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      style={style}
-      className={className}
-    />
-  )
-}
 
 export default function Home() {
   const { lang, t, toggle } = useLang()
@@ -45,22 +15,19 @@ export default function Home() {
         <title>Creek View — New Cairo | Mountain View</title>
         <meta name="description" content="A new project by Mountain View on 119 acres in the heart of the Fifth Settlement." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* Preload hero image for fast LCP */}
-        <link rel="preload" as="image" href={IMGS.hero} />
+        <link rel="preload" as="image" href="/images/hero1.jpeg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://creekview-mountainview.com" />
       </Head>
 
-      <div dir={t.dir} style={{ fontFamily: isRTL ? "'Cairo', 'Inter', sans-serif" : "'Inter', sans-serif" }}>
+      <div dir={t.dir} style={{ fontFamily: isRTL ? "'Cairo','Inter',sans-serif" : "'Inter',sans-serif" }}>
 
         {/* ─── NAVBAR ─── */}
         <nav className="navbar">
           <div className="navbar-inner">
             <div className="navbar-logo">
-              <img src={IMGS.logo} alt="Mountain View" width={120} height={36} />
+              <img src="/images/launch.jpeg" alt="Creek View" style={{ height: 40, width: 'auto', borderRadius: 4, objectFit: 'cover', objectPosition: 'top' }} />
             </div>
-            {/* Desktop links */}
             <ul className="navbar-links">
               <li><a href="#home">{t.nav.home}</a></li>
               <li><a href="#register">{t.nav.register}</a></li>
@@ -77,7 +44,6 @@ export default function Home() {
               </li>
               <li><a href="#register" className="navbar-cta">{t.nav.contact}</a></li>
             </ul>
-            {/* Mobile lang button — always visible on mobile */}
             <button onClick={toggle} className="mobile-lang-btn">
               {lang === 'en' ? 'عربي' : 'English'}
             </button>
@@ -85,11 +51,14 @@ export default function Home() {
         </nav>
 
         {/* ─── HERO ─── */}
-        <section className="hero" id="home">
+        <section className="hero" id="home" style={{
+          backgroundImage: `linear-gradient(160deg, rgba(0,15,61,0.70) 0%, rgba(0,15,61,0.40) 60%, rgba(0,15,61,0.65) 100%), url('/images/hero1.jpeg')`,
+          backgroundSize: 'cover', backgroundPosition: 'center',
+        }}>
           <div className="hero-inner">
             <div>
-              <img src={IMGS.logo} alt="Mountain View" className="hero-logo" width={160} height={44} />
-              <h1>{t.hero.title1}<br /><em>{t.hero.title2}</em></h1>
+              <span className="hero-badge">Mountain View — New Cairo</span>
+              <h1>Creek View —<br /><em>New Cairo</em></h1>
               <p className="hero-sub">{t.hero.sub}</p>
               <a href="#register" className="btn-hero">{t.hero.cta}</a>
             </div>
@@ -102,7 +71,7 @@ export default function Home() {
           <div className="section-inner">
             <div className="about-grid">
               <div className="about-img">
-                <LazyImg src={IMGS.hero} alt="Creek View" />
+                <img src="/images/hero2.jpeg" alt="Creek View Night" loading="lazy" />
               </div>
               <div className="about-text">
                 <div className="section-label">{t.about.label}</div>
@@ -111,6 +80,47 @@ export default function Home() {
                 <p>{t.about.p2}</p>
                 <p>{t.about.p3}</p>
                 <a href="#register" className="btn-hero" style={{ marginTop: 8 }}>{t.about.cta}</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── ZONES ─── */}
+        <section className="section" id="zones">
+          <div className="section-inner">
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <div className="section-label">{isRTL ? 'مناطق المشروع' : 'Project Zones'}</div>
+              <h2 className="section-title">{isRTL ? 'ثلاث مناطق فريدة' : 'Three Unique Zones'}</h2>
+            </div>
+            <img src="/images/zones.jpeg" alt="Creek View Heights Valleys Islands" loading="lazy"
+              style={{ width: '100%', borderRadius: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }} />
+          </div>
+        </section>
+
+        {/* ─── MASTERPLAN ─── */}
+        <section className="section section-bg" id="masterplan">
+          <div className="section-inner">
+            <div className="about-grid">
+              <div>
+                <div className="section-label">{isRTL ? 'المخطط العام' : 'Masterplan'}</div>
+                <h2 className="section-title">{isRTL ? 'كريك فيو هايتس، فالييز، آيلاندز' : 'Creek Heights, Valleys & Islands'}</h2>
+                <p style={{ color: 'var(--muted)', fontSize: 15, lineHeight: 1.8, marginBottom: 14 }}>
+                  {isRTL
+                    ? 'مشروع مصمم بعناية يضم ثلاث مناطق متكاملة — كل منطقة بطابعها المعماري الفريد وإطلالاتها المميزة على المسطحات المائية والمساحات الخضراء.'
+                    : 'A thoughtfully designed community with three distinct zones — each with its own architectural character and unique views over waterways and green spaces.'}
+                </p>
+                <ul className="location-list">
+                  {(isRTL
+                    ? ['Creek Heights — حياة مرتفعة وإطلالات لا تُنسى', 'Creek Valleys — جمال طبيعي وتواصل اجتماعي', 'Creek Islands — جزر خاصة تجربة فريدة']
+                    : ['Creek Heights — Elevated Living, Timeless Views', 'Creek Valleys — Natural Beauty, Connected Living', 'Creek Islands — Refined Island Living, Everyday Escape']
+                  ).map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+                <a href="#register" className="btn-hero" style={{ marginTop: 20 }}>
+                  {isRTL ? 'اطلب المخطط الكامل ←' : 'Request Full Masterplan →'}
+                </a>
+              </div>
+              <div className="about-img">
+                <img src="/images/masterplan.jpeg" alt="Creek View Masterplan" loading="lazy" />
               </div>
             </div>
           </div>
@@ -147,14 +157,11 @@ export default function Home() {
                 <ul className="location-list">
                   {t.location.items.map((item, i) => <li key={i}>{item}</li>)}
                 </ul>
-                <p style={{ color: 'var(--muted)', fontSize: 15, marginTop: 20, lineHeight: 1.7 }}>
-                  {t.location.note}
-                </p>
+                <p style={{ color: 'var(--muted)', fontSize: 15, marginTop: 20, lineHeight: 1.7 }}>{t.location.note}</p>
               </div>
               <div className="location-img">
-                <a href="https://www.google.com/maps/search/Mountain+View+Creek+View+New+Cairo" target="_blank" rel="noreferrer">
-                  <LazyImg src={IMGS.location} alt="Creek View Location" />
-                </a>
+                <img src="/images/east.jpeg" alt="Creek View East" loading="lazy"
+                  style={{ width: '100%', height: 380, objectFit: 'cover', borderRadius: 14 }} />
               </div>
             </div>
           </div>
@@ -163,15 +170,22 @@ export default function Home() {
         {/* ─── GALLERY ─── */}
         <section className="section" id="gallery">
           <div className="section-inner">
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <div className="section-label">{t.gallery.label}</div>
               <h2 className="section-title">{t.gallery.title}</h2>
               <p className="section-desc" style={{ margin: '0 auto' }}>{t.gallery.sub}</p>
             </div>
             <div className="gallery-grid">
-              {IMGS.gallery.map((src, i) => (
+              {[
+                ['/images/hero1.jpeg', 'Creek View Canal'],
+                ['/images/hero2.jpeg', 'Creek View Night'],
+                ['/images/zones.jpeg', 'Heights Valleys Islands'],
+                ['/images/launch.jpeg', 'Creek View Launch'],
+                ['/images/masterplan.jpeg', 'Masterplan'],
+                ['/images/east.jpeg', 'Creek View East'],
+              ].map(([src, alt], i) => (
                 <a key={i} href={src} target="_blank" rel="noreferrer" className="gallery-item">
-                  <LazyImg src={src} alt={`Creek View ${i + 1}`} />
+                  <img src={src} alt={alt} loading="lazy" />
                 </a>
               ))}
             </div>
@@ -209,13 +223,14 @@ export default function Home() {
         <footer className="footer">
           <div className="footer-inner">
             <div className="footer-brand">
-              <img src={IMGS.logo} alt="Mountain View" width={120} height={36} loading="lazy" />
+              <img src="/images/launch.jpeg" alt="Creek View"
+                style={{ height: 48, width: 'auto', borderRadius: 6, objectFit: 'cover', objectPosition: 'top', marginBottom: 14 }} />
               <p>{t.footer.desc}</p>
             </div>
             <div className="footer-col">
               <h4>{t.footer.quickLinks}</h4>
               <ul>
-                {['#about','#features','#location','#units'].map((href, i) => (
+                {['#about','#zones','#location','#units'].map((href, i) => (
                   <li key={i}><a href={href}>{t.footer.links[i]}</a></li>
                 ))}
               </ul>
