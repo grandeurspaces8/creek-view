@@ -3,7 +3,7 @@ import { useLang } from './LanguageContext'
 
 const PHONE = '01008900076'
 const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/leads@grandeur-spaces.com'
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/64aabd78887f35f7847e338d375f0317'
 
 export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const { t } = useLang()
