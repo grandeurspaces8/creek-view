@@ -327,3 +327,22 @@ body {
   .hero-form { padding: 28px 20px; }
   .section { padding: 64px 20px; }
 }
+
+/* ─── MOBILE LANG BUTTON ─── */
+.mobile-lang-btn {
+  display: none;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; padding: 7px 14px;
+  border-radius: 6px; cursor: pointer;
+  font-size: 13px; font-weight: 700;
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .mobile-lang-btn { display: block; }
+  .navbar-inner { padding: 0 16px; }
+  .hero { padding: 90px 20px 60px; }
+  .about-img img { height: 260px; }
+  .location-img img { height: 260px; }
+}
