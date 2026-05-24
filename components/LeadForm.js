@@ -5,8 +5,7 @@ const PHONE = '01008900076'
 const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
 
 // ✅ تم تعديل رابط الفورم فقط
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/ayosha45767@gmail.com'
-
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/64aabd78887f35f7847e338d375f0317'
 export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const { t } = useLang()
   const f = t.form
@@ -38,7 +37,7 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
 
       const data = await res.json()
 
-      if (data.success === 'true' || data.success === true) {
+      if (res.ok) {
         setStatus('success')
 
         // ✅ تتبع Google Tag Manager
