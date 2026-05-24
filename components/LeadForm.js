@@ -5,7 +5,7 @@ const PHONE = '01008900076'
 const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
 
 // ✅ تم تعديل رابط الفورم فقط
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/64aabd78887f35f7847e338d375f0317'
+const FORMSUBMIT_URL = 'https://api.web3forms.com/submit'
 export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const { t } = useLang()
   const f = t.form
@@ -26,12 +26,15 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          name: form.name,
-          phone: form.phone,
-          email: form.email || 'Not provided',
-          _subject: `New Lead — Creek View MV | ${form.name} — ${form.phone}`,
+  access_key: '968c2808-d4bd-482c-a72e-6489a307d7d7',
+
+  name: form.name,
+  phone: form.phone,
+  email: form.email || 'Not provided'
+
+          subject: `New Lead — Creek View MV | ${form.name} — ${form.phone}`,
           _template: 'table',
-          _captcha: 'false',
+      
         }),
       })
 
