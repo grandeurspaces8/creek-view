@@ -3,7 +3,9 @@ import { useLang } from './LanguageContext'
 
 const PHONE = '01008900076'
 const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek View Mountain View`
-const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/64aabd78887f35f7847e338d375f0317'
+
+// ✅ تم تعديل رابط الفورم فقط
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/ayosha45767@gmail.com'
 
 export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const { t } = useLang()
@@ -16,10 +18,14 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('loading')
+
     try {
       const res = await fetch(FORMSUBMIT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
         body: JSON.stringify({
           name: form.name,
           phone: form.phone,
@@ -29,13 +35,28 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
           _captcha: 'false',
         }),
       })
+
       const data = await res.json()
+
       if (data.success === 'true' || data.success === true) {
         setStatus('success')
-        setForm({ name: '', phone: '', email: '' })
+
+        // ✅ تتبع Google Tag Manager
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({
+          event: 'lead_form_submit'
+        })
+
+        setForm({
+          name: '',
+          phone: '',
+          email: ''
+        })
+
       } else {
         setStatus('error')
       }
+
     } catch {
       setStatus('error')
     }
@@ -51,23 +72,64 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
       ) : (
         <form onSubmit={handleSubmit}>
           <div className="form-field">
-            <input type="text" name="name" placeholder={f.name} value={form.name} onChange={handleChange} required />
+            <input
+              type="text"
+              name="name"
+              placeholder={f.name}
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
           </div>
+
           <div className="form-field">
-            <input type="tel" name="phone" placeholder={f.phone} value={form.phone} onChange={handleChange} required />
+            <input
+              type="tel"
+              name="phone"
+              placeholder={f.phone}
+              value={form.phone}
+              onChange={handleChange}
+              required
+            />
           </div>
+
           <div className="form-field">
-            <input type="email" name="email" placeholder={f.email} value={form.email} onChange={handleChange} />
+            <input
+              type="email"
+              name="email"
+              placeholder={f.email}
+              value={form.email}
+              onChange={handleChange}
+            />
           </div>
-          <button type="submit" className="btn-submit" disabled={status === 'loading'}>
+
+          <button
+            type="submit"
+            className="btn-submit"
+            disabled={status === 'loading'}
+          >
             {status === 'loading' ? f.submitting : f.submit}
           </button>
-          {status === 'error' && <p className="form-error">{f.error}</p>}
+
+          {status === 'error' && (
+            <p className="form-error">{f.error}</p>
+          )}
         </form>
       )}
+
       <div className="form-contact-row">
-        <a href={`tel:${PHONE}`} className="btn-call-w">{f.call}</a>
-        <a href={WA_LINK} target="_blank" rel="noreferrer" className="btn-wa-w">{f.whatsapp}</a>
+        <a href={`tel:${PHONE}`} className="btn-call-w">
+          {f.call}
+        </a>
+
+        <a
+          href={WA_LINK}
+          target="_blank"
+          rel="noreferrer"
+          className="btn-wa-w"
+        >
+          {f.whatsapp}
+        </a>
       </div>
     </>
   )
