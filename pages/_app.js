@@ -5,7 +5,6 @@ import Script from 'next/script'
 export default function App({ Component, pageProps }) {
   return (
     <>
-      {/* Google Tag Manager */}
       <Script
         id="gtm-script"
         strategy="afterInteractive"
@@ -18,7 +17,7 @@ export default function App({ Component, pageProps }) {
             j.async=true;
             j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
             f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-XXXXXXX');
+            })(window,document,'script','dataLayer','GTM-PJBDBN3M');
           `,
         }}
       />
