@@ -30,7 +30,7 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
 
   name: form.name,
   phone: form.phone,
-  email: form.email || 'Not provided'
+  email: form.email || 'Not provided',
 
           subject: `New Lead — Creek View MV | ${form.name} — ${form.phone}`,
           _template: 'table',
