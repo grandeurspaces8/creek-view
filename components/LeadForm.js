@@ -6,13 +6,22 @@ const WA_LINK = `https://wa.me/2${PHONE}/?text=Hello, I'm interested in Creek Vi
 
 // ✅ تم تعديل رابط الفورم فقط
 const FORMSUBMIT_URL = 'https://api.web3forms.com/submit'
+
 export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
   const { t } = useLang()
   const f = t.form
-  const [form, setForm] = useState({ name: '', phone: '', email: '' })
+
+  const [form, setForm] = useState({
+    name: '',
+    phone1: '',
+    phone2: '',
+    email: ''
+  })
+
   const [status, setStatus] = useState(null)
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,15 +35,15 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-  access_key: '968c2808-d4bd-482c-a72e-6489a307d7d7',
+          access_key: '968c2808-d4bd-482c-a72e-6489a307d7d7',
 
-  name: form.name,
-  phone: form.phone,
-  email: form.email || 'Not provided',
+          name: form.name,
+          phone1: form.phone1,
+          phone2: form.phone2 || 'Not provided',
+          email: form.email || 'Not provided',
 
-          subject: `New Lead — Creek View MV | ${form.name} — ${form.phone}`,
+          subject: `New Lead — Creek View MV | ${form.name} — ${form.phone1}`,
           _template: 'table',
-      
         }),
       })
 
@@ -51,7 +60,8 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
 
         setForm({
           name: '',
-          phone: '',
+          phone1: '',
+          phone2: '',
           email: ''
         })
 
@@ -87,11 +97,21 @@ export default function LeadForm({ dark = false, titleKey, subtitleKey, id }) {
           <div className="form-field">
             <input
               type="tel"
-              name="phone"
-              placeholder={f.phone}
-              value={form.phone}
+              name="phone1"
+              placeholder="Phone Number 1 *"
+              value={form.phone1}
               onChange={handleChange}
               required
+            />
+          </div>
+
+          <div className="form-field">
+            <input
+              type="tel"
+              name="phone2"
+              placeholder="Phone Number 2"
+              value={form.phone2}
+              onChange={handleChange}
             />
           </div>
 
